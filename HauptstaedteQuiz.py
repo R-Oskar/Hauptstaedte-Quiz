@@ -116,6 +116,8 @@ def update_country_list():
 def ask_question():
     global current_question, question_type, right_guesses, solution, wrong_guesses
 
+    print(right_guesses)
+
     # Flattened list of all country-capital pairs
     flattened_list = [element for sublist in country_list for element in sublist]
 
@@ -126,6 +128,7 @@ def ask_question():
         label_output_text.set("Du hast alle Fragen korrekt beantwortet!")
         right_guesses = []
         wrong_guesses = []
+        update_country_list()
         ask_question()
         return
 
@@ -150,12 +153,12 @@ def button_clicked():
 
     if guess.lower().casefold() == solution.lower().casefold():
         label_output_text.set("Das ist richtig!")
-        right_guesses.append(current_question)
+        right_guesses.append(solution)
     else:
         label_output_text.set(
             f"Falsch! Die Lösung ist {solution}/{current_question}."
         )
-        wrong_guesses.append(guess)
+        wrong_guesses.append(solution)
 
     update_score_label_text()
     ask_question()
