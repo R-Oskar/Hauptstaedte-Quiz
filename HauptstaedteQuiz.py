@@ -114,9 +114,7 @@ def update_country_list():
     update_score_label_text()
 
 def ask_question():
-    global current_question, question_type, right_guesses, solution, wrong_guesses
-
-    print(right_guesses)
+    global current_question, question_type, right_guesses, solution, wrong_guesses, index
 
     # Flattened list of all country-capital pairs
     flattened_list = [element for sublist in country_list for element in sublist]
@@ -152,13 +150,16 @@ def button_clicked():
     guess = entry_text.get().strip()
 
     if guess.lower().casefold() == solution.lower().casefold():
-        label_output_text.set("Das ist richtig!")
+        label_output_text.set("Richtig!\n")
         right_guesses.append(solution)
     else:
-        label_output_text.set(
-            f"Falsch! Die Lösung ist {solution}/{current_question}."
-        )
+        label_output_text.set(f"Falsch!\n" )
         wrong_guesses.append(solution)
+
+    if question_type == 1:
+        label_output_text.set(label_output_text.get() + f"{solution} hat die Hauptstadt {country_list[index][1]}")
+    else:
+        label_output_text.set(label_output_text.get() + f"{solution} ist die Hauptstadt von {country_list[index][0]}" )
 
     update_score_label_text()
     ask_question()
